@@ -1,34 +1,37 @@
 import { useEffect, useState } from 'react';
-import BarChart from './components/BarChart';
-import data from './data.json';
+import DashboardLayout from './components/DashboardLayout';
+// import BarChart from './components/BarChart';
+// import data from './data.json';
 
 function App() {
   console.clear();
 
-  const allSessions = data.__collections__.dungeons;
-  const players = Object.values(data.__collections__.users).sort();
+  // const allSessions = data.__collections__.dungeons;
+  // const players = Object.values(data.__collections__.users).sort();
 
-  const [selectedPlayerId, setSelectedPlayerId] = useState(players[0]);
+  // const [selectedPlayerId, setSelectedPlayerId] = useState(players[0]);
 
-  const playerSessions = Object.fromEntries(
-    Object.entries(allSessions).filter(([key, value]) => value.PlayerId == selectedPlayerId)
-  );
-  const playerSessionKeys = Object.keys(playerSessions).sort();
-  const [selectedSessionId, setSelectedSessionId] = useState(playerSessionKeys[0]);
+  // const playerSessions = Object.fromEntries(
+  //   Object.entries(allSessions).filter(([key, value]) => value.PlayerId == selectedPlayerId)
+  // );
+  // const playerSessionKeys = Object.keys(playerSessions).sort();
+  // const [selectedSessionId, setSelectedSessionId] = useState(playerSessionKeys[0]);
 
   // console.log(playerSessionKeys);
 
-  useEffect(() => {
-  if (playerSessionKeys.length > 0) {
-    setSelectedSessionId(playerSessionKeys[0]);
-  } else {
-    setSelectedSessionId(""); // or some fallback behavior
-  }
-}, [selectedPlayerId]);
+//   useEffect(() => {
+//   if (playerSessionKeys.length > 0) {
+//     setSelectedSessionId(playerSessionKeys[0]);
+//   } else {
+//     setSelectedSessionId(""); // or some fallback behavior
+//   }
+// }, [selectedPlayerId]);
 
   return (
     <div className="p-4">
-      <header>
+
+      <DashboardLayout />
+      {/* <header>
         <h1>Dungeon Dashboard</h1>
       </header>
 
@@ -68,7 +71,7 @@ function App() {
       <section id="player-info">
       </section>
 
-      <BarChart data={allSessions} playerId={selectedPlayerId} sessionId={selectedSessionId} />
+      <BarChart data={allSessions} playerId={selectedPlayerId} sessionId={selectedSessionId} /> */}
 
     </div>
   );

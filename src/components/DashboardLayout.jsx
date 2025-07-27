@@ -43,7 +43,7 @@ const DashboardLayout = () => {
     }, [selectedProfiles]);
 
     return (
-        <div className="p-4 max-w-screen-2xl mx-auto">
+        <div className="ax-w-screen-2xl mx-auto">
             <header className="mb-6">
                 <h2 className="text-3xl font-bold">Player Behavior Dashboard</h2>
 
@@ -78,7 +78,7 @@ const DashboardLayout = () => {
 
             <section>
                 <h3 className="font-bold mb-2">General</h3>
-                <div className="bg-slate-800 rounded-lg columns-4 p-4">
+                <div className="columns-4 mb-4">
                     <UniquePlayersCard data={filteredData} />
                     <TotalTimeCard data={filteredData} />
                     <TotalSessionsCard data={filteredData} />
@@ -86,17 +86,42 @@ const DashboardLayout = () => {
                 </div>
             </section>
 
-            <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                <ExplorationChart data={filteredData} />
-                <LockEfficiencyBoxplot data={filteredData} />
-                <CombatEfficiencyChart data={filteredData} />
-                <MaxComboHistogram data={filteredData} />
-                <DeathsVsAttemptsHeatmap data={filteredData} />
-                <QuestsByCategoryChart data={filteredData} />
-                <QuestsBySubCategoryChart data={filteredData} />
-                <EfficiencyScatter data={filteredData} metric="CompletedQuests" />
-                <EfficiencyScatter data={filteredData} metric="UniqueRoomsEntered" />
-                <EfficiencyScatter data={filteredData} metric="EnemiesKilled" />
+            <section className="flex gap-4">
+                <div className="flex flex-col flex-1">
+                    <div className="text-sm font-bold mb-2">
+                        Exploration Performance
+                    </div>
+                    <div className="flex flex-col gap-4 bg-slate-800 rounded-2xl p-4 flex-1">
+                        <ExplorationChart data={filteredData} />
+                        <LockEfficiencyBoxplot data={filteredData} />
+                        <EfficiencyScatter data={filteredData} metric="UniqueRoomsEntered" />
+                    </div>
+                </div>
+
+                <div className="flex flex-col flex-1">
+                    <div className="text-sm font-bold mb-2">
+                        Combat Performance
+                    </div>
+
+                    <div className="flex flex-col gap-4 bg-slate-800 rounded-2xl p-4 flex-1">
+                        <CombatEfficiencyChart data={filteredData} />
+                        <DeathsVsAttemptsHeatmap data={filteredData} />
+                        {/* <MaxComboHistogram data={filteredData} /> */}
+                        <EfficiencyScatter data={filteredData} metric="EnemiesKilled" />
+                    </div>
+                </div>
+
+                <div className="flex flex-col flex-1">
+                    <div className="text-sm font-bold mb-2">
+                        Quest Performance
+                    </div>
+                    <div className="flex flex-col gap-4 bg-slate-800 rounded-2xl p-4 flex-1">
+                        <QuestsByCategoryChart data={filteredData} />
+                        <QuestsBySubCategoryChart data={filteredData} />
+                        <EfficiencyScatter data={filteredData} metric="CompletedQuests" />
+                    </div>
+                </div>
+
             </section>
         </div>
     );

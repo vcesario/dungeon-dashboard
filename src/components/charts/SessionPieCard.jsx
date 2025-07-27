@@ -55,7 +55,7 @@ const SessionPieCard = ({ data }) => {
             .attr("text-anchor", "middle")
             .attr("alignment-baseline", "middle")
             .attr("fill", "white")
-            .attr("font-size", "0.75rem")
+            .attr("font-size", "16px")
             .text(d => {
                 const percent = (d.data.count / d3.sum(pieData, d => d.count)) * 100;
                 return `${getProfileLabel(d.data.profile)} (${percent.toFixed(1)}%)`;
@@ -66,7 +66,7 @@ const SessionPieCard = ({ data }) => {
     const label = "Session Distribution";
 
     return (
-        <div className="rounded-xl p-4 h-50 bg-sky-800 grid grid-flow-col grid-rows-3" >
+        <div className="rounded-xl p-4 h-50 bg-slate-800 grid grid-flow-col grid-rows-3" >
             <div className="text-sm font-medium mb-2 opacity-70 row-span-1">{label}</div>
             <div className="row-span-2 flex items-center justify-center">
                 <svg ref={ref} className="w-full h-full" viewBox="0 0 160 160" />

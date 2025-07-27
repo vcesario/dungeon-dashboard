@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { getProfileLabel } from "../../utils/dataTransforms";
 
 const ExplorationChart = ({ data }) => {
     const ref = useRef();
@@ -44,7 +45,7 @@ const ExplorationChart = ({ data }) => {
 
         const x = d3
             .scaleBand()
-            .domain(boxData.map((d) => d.profile))
+            .domain(boxData.map((d) => getProfileLabel(d.profile)))
             .range([0, width])
             .padding(0.4);
 
@@ -63,7 +64,7 @@ const ExplorationChart = ({ data }) => {
             .data(boxData)
             .join("g")
             .attr("class", "box")
-            .attr("transform", (d) => `translate(${x(d.profile)},0)`)
+            .attr("transform", (d) => `translate(${x(getProfileLabel(d.profile))},0)`)
             .each(function (d) {
                 const g = d3.select(this);
                 const boxWidth = x.bandwidth();
@@ -104,10 +105,22 @@ const ExplorationChart = ({ data }) => {
             .append("text")
             .attr("x", margin.left)
             .attr("y", 20)
-            .attr("font-size", "16px")
+            .attr("font-size", "12px")
             .attr("font-weight", "bold")
             .attr("fill", "white")
-            .text("Exploration: Unique Rooms / Total Rooms");
+            .attr("opacity", "70%")
+            .text("Dungeon discoverability");
+
+        svg
+            .append("text")
+            .attr("transform", `rotate(-90)`)
+            .attr("x", -margin.top - height / 2)
+            .attr("y", 10)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "12px")
+            .attr("fill", "white")
+            .attr("opacity", "70%")
+            .text("Ratio - Unique Rooms over Total Rooms");
     }, [data]);
 
     return <div ref={ref} className="w-full h-auto" />;

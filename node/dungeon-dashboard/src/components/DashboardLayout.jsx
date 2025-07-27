@@ -7,16 +7,16 @@ import LockEfficiencyBoxplot from "./charts/LockEfficiencyBoxplot";
 import CombatEfficiencyChart from "./charts/CombatEfficiencyChart";
 import DeathsVsAttemptsHeatmap from "./charts/DeathsVsAttemptsHeatmap";
 import MaxComboHistogram from "./charts/MaxComboHistogram";
-// import QuestsByCategoryChart from "./charts/QuestsByCategoryChart";
-// import QuestsBySubCategoryChart from "./charts/QuestsBySubCategoryChart";
-// import EfficiencyScatter from "./charts/EfficiencyScatter";
+import QuestsByCategoryChart from "./charts/QuestsByCategoryChart";
+import QuestsBySubCategoryChart from "./charts/QuestsBySubCategoryChart";
+import EfficiencyScatter from "./charts/EfficiencyScatter";
 
 // Assume this comes from somewhere
 import rawData from "../data/data.json";
-import { filterDataByProfile } from "../utils/dataTransforms";
+import { filterDataByProfile, fixData } from "../utils/dataTransforms";
 
 const DashboardLayout = () => {
-    const arrayData = Object.values(rawData.__collections__.dungeons);
+    const arrayData = fixData(Object.values(rawData.__collections__.dungeons));
     const [selectedProfile, setSelectedProfile] = useState("All");
 
     const profiles = ["All", "0", "1", "2", "3"]; // Profile enums
@@ -45,11 +45,11 @@ const DashboardLayout = () => {
                 <CombatEfficiencyChart data={filteredData} />
                 <MaxComboHistogram data={filteredData} />
                 <DeathsVsAttemptsHeatmap data={filteredData} />
-        {/* <QuestsByCategoryChart data={filteredData} />
-        <QuestsBySubCategoryChart data={filteredData} />
-        <EfficiencyScatter data={filteredData} metric="CompletedQuests" />
-        <EfficiencyScatter data={filteredData} metric="UniqueRoomsEntered" />
-        <EfficiencyScatter data={filteredData} metric="TotalDeaths" /> */}
+                <QuestsByCategoryChart data={filteredData} />
+                <QuestsBySubCategoryChart data={filteredData} />
+                <EfficiencyScatter data={filteredData} metric="CompletedQuests" />
+                <EfficiencyScatter data={filteredData} metric="UniqueRoomsEntered" />
+                <EfficiencyScatter data={filteredData} metric="EnemiesKilled" />
             </section>
         </div>
     );

@@ -22,7 +22,6 @@ const MaxComboHistogram = ({ data }) => {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Filter and prepare data
         const values = data
             .map(d => d.MaxCombo)
             .filter(v => typeof v === "number" && isFinite(v));
@@ -49,7 +48,6 @@ const MaxComboHistogram = ({ data }) => {
             .domain([0, d3.max(bins, d => d.length) || 1])
             .range([height, 0]);
 
-        // Bars
         chart.selectAll("rect")
             .data(bins)
             .join("rect")
@@ -59,7 +57,6 @@ const MaxComboHistogram = ({ data }) => {
             .attr("height", d => height - y(d.length))
             .attr("fill", "#4a90e2");
 
-        // Axes
         chart
             .append("g")
             .attr("transform", `translate(0,${height})`)
@@ -67,7 +64,6 @@ const MaxComboHistogram = ({ data }) => {
 
         chart.append("g").call(d3.axisLeft(y).ticks(5).tickFormat(d3.format("d")));
 
-        // Title
         svg
             .append("text")
             .attr("x", margin.left)

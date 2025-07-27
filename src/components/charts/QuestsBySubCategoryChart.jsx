@@ -32,7 +32,6 @@ const QuestsBySubCategoryChart = ({ data }) => {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Group by profile and sum quests per subcategory
         const grouped = d3.group(data, (d) =>
             d.InputProfile?.PlayerProfileEnum ?? "undefined"
         );
@@ -42,10 +41,7 @@ const QuestsBySubCategoryChart = ({ data }) => {
         for (const [profile, entries] of grouped) {
             const sums = Object.fromEntries(SUBCATEGORIES.map((s) => [s, 0]));
             entries.forEach((d) => {
-                // const questData = d.CompletedQuestsPerSubCategory;
-                // if (!questData) return;
                 SUBCATEGORIES.forEach((s) => {
-                    // if (questData[s] != null) sums[s] += questData[s];
                     sums[s] += d["Completed" + s + "Quests"];
                 });
             });
@@ -77,7 +73,6 @@ const QuestsBySubCategoryChart = ({ data }) => {
             .nice()
             .range([height, 0]);
 
-        // Axes
         chart
             .append("g")
             .attr("transform", `translate(0,${height})`)
@@ -85,7 +80,6 @@ const QuestsBySubCategoryChart = ({ data }) => {
 
         chart.append("g").call(d3.axisLeft(y));
 
-        // Bars
         chart
             .selectAll("g.profile")
             .data(d3.group(chartData, (d) => d.profile))

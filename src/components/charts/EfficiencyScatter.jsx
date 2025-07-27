@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-// field can be: "CompletedQuests", "TotalDeaths", "UniqueRoomsEntered"
 const EfficiencyScatter = ({ data, metric }) => {
     const ref = useRef();
 
@@ -23,7 +22,6 @@ const EfficiencyScatter = ({ data, metric }) => {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Clean and prepare data
         const points = data
             .filter((d) =>
                 d.TimeToFinish >= 0 &&
@@ -54,14 +52,12 @@ const EfficiencyScatter = ({ data, metric }) => {
             .domain(["0", "1", "2", "3", "undefined"])
             .range(["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#6B7280"]);
 
-        // Axes
         chart
             .append("g")
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x));
         chart.append("g").call(d3.axisLeft(y));
 
-        // Points
         chart
             .selectAll("circle")
             .data(points)
@@ -72,7 +68,6 @@ const EfficiencyScatter = ({ data, metric }) => {
             .attr("fill", (d) => color(d.profile))
             .attr("opacity", 0.7);
 
-        // Title
         const fieldName = metric.replace(/([A-Z])/g, " $1").trim();
         svg
             .append("text")

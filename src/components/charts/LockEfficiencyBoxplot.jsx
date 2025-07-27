@@ -22,7 +22,6 @@ const LockEfficiencyBoxplot = ({ data }) => {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Group by PlayerProfileEnum
         const ratiosByProfile = d3.group(data, (d) =>
             d.InputProfile?.PlayerProfileEnum ?? "undefined"
         );
@@ -49,7 +48,6 @@ const LockEfficiencyBoxplot = ({ data }) => {
             };
         }).filter(Boolean);
 
-        // Scales
         const x = d3
             .scaleBand()
             .domain(boxData.map((d) => d.profile))
@@ -58,7 +56,6 @@ const LockEfficiencyBoxplot = ({ data }) => {
 
         const y = d3.scaleLinear().domain([0, 1]).range([height, 0]);
 
-        // Axes
         chart
             .append("g")
             .attr("transform", `translate(0,${height})`)

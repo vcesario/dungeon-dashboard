@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from "react";
 import DropdownFilter from "./DropdownFilter";
 
-// Chart components (placeholders for now)
 import ExplorationChart from "./charts/ExplorationChart";
 import LockEfficiencyBoxplot from "./charts/LockEfficiencyBoxplot";
 import CombatEfficiencyChart from "./charts/CombatEfficiencyChart";
@@ -11,7 +10,6 @@ import QuestsByCategoryChart from "./charts/QuestsByCategoryChart";
 import QuestsBySubCategoryChart from "./charts/QuestsBySubCategoryChart";
 import EfficiencyScatter from "./charts/EfficiencyScatter";
 
-// Assume this comes from somewhere
 import rawData from "../data/data.json";
 import { filterDataByProfile, fixData } from "../utils/dataTransforms";
 
@@ -19,7 +17,7 @@ const DashboardLayout = () => {
     const arrayData = fixData(Object.values(rawData.__collections__.dungeons));
     const [selectedProfile, setSelectedProfile] = useState("All");
 
-    const profiles = ["All", "0", "1", "2", "3"]; // Profile enums
+    const profiles = ["All", "0", "1", "2", "3"];
 
     const filteredData = useMemo(() => {
         return selectedProfile === "All"

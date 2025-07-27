@@ -22,12 +22,10 @@ const CombatEfficiencyChart = ({ data }) => {
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Group data by profile
     const grouped = d3.group(data, (d) =>
       d.InputProfile?.PlayerProfileEnum ?? "undefined"
     );
 
-    // Compute totals per profile
     const barData = Array.from(grouped, ([profile, entries]) => {
       let killed = 0;
       let total = 0;
@@ -47,16 +45,13 @@ const CombatEfficiencyChart = ({ data }) => {
       };
     });
 
-    // Stacked keys
     const keys = ["killed", "left"];
 
-    // Color scale
     const color = d3
       .scaleOrdinal()
       .domain(keys)
-      .range(["#10B981", "#F87171"]); // green for killed, red for left
+      .range(["#10B981", "#F87171"]);
 
-    // Scales
     const x = d3
       .scaleBand()
       .domain(barData.map((d) => d.profile))
@@ -69,7 +64,6 @@ const CombatEfficiencyChart = ({ data }) => {
       .nice()
       .range([height, 0]);
 
-    // Axes
     chart
       .append("g")
       .attr("transform", `translate(0,${height})`)
@@ -77,12 +71,10 @@ const CombatEfficiencyChart = ({ data }) => {
 
     chart.append("g").call(d3.axisLeft(y));
 
-    // Stack generator
     const stack = d3.stack().keys(keys);
 
     const stackedData = stack(barData);
 
-    // Draw bars
     chart
       .selectAll("g.layer")
       .data(stackedData)
@@ -97,7 +89,6 @@ const CombatEfficiencyChart = ({ data }) => {
       .attr("height", (d) => y(d[0]) - y(d[1]))
       .attr("width", x.bandwidth());
 
-    // Add total labels
     chart
       .selectAll("text.label")
       .data(barData)
@@ -110,7 +101,6 @@ const CombatEfficiencyChart = ({ data }) => {
       .attr("fill", "white")
       .text((d) => d.total);
 
-    // Title
     svg
       .append("text")
       .attr("x", margin.left)

@@ -27,7 +27,6 @@ const QuestsByCategoryChart = ({ data }) => {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Group by profile and sum quest completions per category
         const grouped = d3.group(data, (d) =>
             d.InputProfile?.PlayerProfileEnum ?? "undefined"
         );
@@ -35,10 +34,7 @@ const QuestsByCategoryChart = ({ data }) => {
         const stackedData = Array.from(grouped, ([profile, entries]) => {
             const sums = Object.fromEntries(CATEGORIES.map((c) => [c, 0]));
             entries.forEach((d) => {
-                // const questData = d.CompletedQuestsPerCategory;
-                // if (!questData) return;
                 CATEGORIES.forEach((c) => {
-                    //   if (questData[c] != null) sums[c] += questData[c];
                     sums[c] += d["Completed" + c + "Quests"];
                 });
             });

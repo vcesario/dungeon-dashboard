@@ -13,7 +13,7 @@ const ExplorationChart = ({ data }) => {
 
         const svg = d3
             .select(ref.current)
-            .html("") // clear previous
+            .html("")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom);
@@ -22,7 +22,6 @@ const ExplorationChart = ({ data }) => {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Step 1: Prepare data
         const ratiosByProfile = d3.group(data, (d) =>
             d.InputProfile?.PlayerProfileEnum ?? "undefined"
         );
@@ -30,7 +29,7 @@ const ExplorationChart = ({ data }) => {
         const boxData = Array.from(ratiosByProfile, ([profile, entries]) => {
             const values = entries
                 .map((d) => d.UniqueRoomsEntered / d.TotalRooms)
-                .filter((v) => v >= 0 && v <= 1); // valid ratios
+                .filter((v) => v >= 0 && v <= 1);
 
             const sorted = values.sort(d3.ascending);
             return {
@@ -43,7 +42,6 @@ const ExplorationChart = ({ data }) => {
             };
         });
 
-        // Step 2: Scales
         const x = d3
             .scaleBand()
             .domain(boxData.map((d) => d.profile))
@@ -52,7 +50,6 @@ const ExplorationChart = ({ data }) => {
 
         const y = d3.scaleLinear().domain([0, 1]).range([height, 0]);
 
-        // Step 3: Axes
         chart
             .append("g")
             .attr("transform", `translate(0,${height})`)
@@ -60,7 +57,7 @@ const ExplorationChart = ({ data }) => {
 
         chart.append("g").call(d3.axisLeft(y).ticks(5));
 
-        // Step 4: Draw boxplots
+        // Draw boxplots
         chart
             .selectAll("g.box")
             .data(boxData)
@@ -103,7 +100,6 @@ const ExplorationChart = ({ data }) => {
                     .attr("stroke", "#1E3A8A");
             });
 
-        // Chart title
         svg
             .append("text")
             .attr("x", margin.left)
@@ -112,7 +108,6 @@ const ExplorationChart = ({ data }) => {
             .attr("font-weight", "bold")
             .attr("fill", "white")
             .text("Exploration: Unique Rooms / Total Rooms");
-
     }, [data]);
 
     return <div ref={ref} className="w-full h-auto" />;

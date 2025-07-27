@@ -22,7 +22,6 @@ const DeathsVsAttemptsHeatmap = ({ data }) => {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Clean & group data: (attempts, deaths) -> count
         const filtered = data.filter(
             (d) =>
                 d.TotalAttempts >= 0 &&
@@ -48,21 +47,18 @@ const DeathsVsAttemptsHeatmap = ({ data }) => {
         const attempts = Array.from(attemptsSet).sort((a, b) => a - b);
         const deaths = Array.from(deathsSet).sort((a, b) => a - b);
 
-        // Scales
         const x = d3.scaleBand().domain(attempts).range([0, width]).padding(0.05);
         const y = d3.scaleBand().domain(deaths).range([height, 0]).padding(0.05);
 
         const maxCount = d3.max(Array.from(binMap.values(), m => d3.max(m.values())));
         const color = d3.scaleSequential(d3.interpolateOranges).domain([0, maxCount || 1]);
 
-        // Axes
         chart.append("g")
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x).tickFormat(d3.format("d")));
 
         chart.append("g").call(d3.axisLeft(y).tickFormat(d3.format("d")));
 
-        // Cells
         for (const [a, deathsMap] of binMap.entries()) {
             for (const [d, count] of deathsMap.entries()) {
                 chart.append("rect")
@@ -74,7 +70,6 @@ const DeathsVsAttemptsHeatmap = ({ data }) => {
             }
         }
 
-        // Title
         svg
             .append("text")
             .attr("x", margin.left)
@@ -87,7 +82,6 @@ const DeathsVsAttemptsHeatmap = ({ data }) => {
         // Legend
         const legendWidth = 100;
         const legendHeight = 10;
-        // const legendX = width + margin.left + 10;
         const legendX = width - margin.right;
         const legendY = 10;
 

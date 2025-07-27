@@ -13,3 +13,22 @@ export function fixData(data) {
     return d;
   });
 }
+
+export function getProfileLabel(number) {
+  switch (number) {
+    case 0:
+    case "0":
+      return "Mastery";
+    case 1:
+    case "1":
+      return "Immersion";
+    case 2:
+    case "2":
+      return "Creativity";
+    case 3:
+    case "3":
+      return "Achievement";
+    default:
+      return "undefined";
+  }
+}

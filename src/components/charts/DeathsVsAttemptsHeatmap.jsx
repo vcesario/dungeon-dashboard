@@ -74,10 +74,28 @@ const DeathsVsAttemptsHeatmap = ({ data }) => {
             .append("text")
             .attr("x", margin.left)
             .attr("y", 20)
-            .attr("font-size", "16px")
+            .attr("font-size", "12px")
             .attr("font-weight", "bold")
             .attr("fill", "white")
-            .text("Deaths vs Attempts (heatmap)");
+            .attr("opacity", "70%")
+            .text("Aggregated Persistence Heatmap");
+
+        svg.append("text")
+            .attr("x", margin.left + width / 2)
+            .attr("y", height + margin.top + margin.bottom - 5)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "12px")
+            .attr("fill", "white")
+            .text("Attempts");
+
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -margin.top - height / 2)
+            .attr("y", 10)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "12px")
+            .attr("fill", "white")
+            .text("Deaths");
 
         // Legend
         const legendWidth = 100;

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { getProfileLabel } from "../../utils/dataTransforms";
 
 const QuestsBySubCategoryChart = ({ data }) => {
     const ref = useRef();
@@ -76,7 +77,7 @@ const QuestsBySubCategoryChart = ({ data }) => {
         chart
             .append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x0));
+            .call(d3.axisBottom(x0).tickFormat((d) => getProfileLabel(d)));
 
         chart.append("g").call(d3.axisLeft(y));
 
@@ -99,10 +100,49 @@ const QuestsBySubCategoryChart = ({ data }) => {
             .append("text")
             .attr("x", margin.left)
             .attr("y", 20)
-            .attr("font-size", "16px")
+            .attr("font-size", "12px")
             .attr("font-weight", "bold")
             .attr("fill", "white")
-            .text("Completed Quests per Subcategory");
+            .attr("opacity", "70%")
+            .text("Quest Completion (Subcategory)");
+
+        const legend = svg
+            .append("g")
+            .attr("transform", `translate(${width - 40}, ${margin.top - 20})`);
+
+        const LEGEND_ROWS = 5;
+        const LEGEND_COLS = 2;
+        const COL_WIDTH = 40;
+
+        SUBCATEGORIES.forEach((subcat, i) => {
+            const row = Math.floor(i / LEGEND_COLS);
+            const col = i % LEGEND_COLS;
+
+            legend.append("rect")
+                .attr("x", col * COL_WIDTH)
+                .attr("y", row * 16)
+                .attr("width", 12)
+                .attr("height", 12)
+                .attr("fill", COLORS(subcat));
+
+            legend.append("text")
+                .attr("x", col * COL_WIDTH + 16)
+                .attr("y", row * 16 + 10)
+                .attr("font-size", "6px")
+                .attr("fill", "white")
+                .text(subcat);
+        });
+
+        legend.insert("rect", ":first-child")
+            .attr("x", -10)
+            .attr("y", -10)
+            .attr("width", LEGEND_COLS * COL_WIDTH + 15)
+            .attr("height", LEGEND_ROWS * 16 + 10)
+            .attr("fill", "black")
+            .attr("opacity", 0.3)
+            .attr("rx", 6);
+
+
     }, [data]);
 
     return <div ref={ref} className="w-full h-auto" />;

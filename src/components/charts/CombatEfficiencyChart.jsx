@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { getProfileLabel } from "../../utils/dataTransforms";
 
 const CombatEfficiencyChart = ({ data }) => {
   const ref = useRef();
@@ -67,7 +68,7 @@ const CombatEfficiencyChart = ({ data }) => {
     chart
       .append("g")
       .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x).tickFormat((d) => getProfileLabel(d)));
 
     chart.append("g").call(d3.axisLeft(y));
 
@@ -105,10 +106,11 @@ const CombatEfficiencyChart = ({ data }) => {
       .append("text")
       .attr("x", margin.left)
       .attr("y", 20)
-      .attr("font-size", "16px")
+      .attr("font-size", "12px")
       .attr("font-weight", "bold")
       .attr("fill", "white")
-      .text("Enemies Killed vs Left (Raw Counts)");
+      .attr("opacity", "70%")
+      .text("Enemies Killed over Enemies Left");
   }, [data]);
 
   return <div ref={ref} className="w-full h-auto" />;

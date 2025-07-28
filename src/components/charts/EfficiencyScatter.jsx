@@ -88,7 +88,6 @@ const EfficiencyScatter = ({ data, metric }) => {
             .attr("fill", "white")
             .text("Time To Finish");
 
-        // Y axis label (rotated)
         svg.append("text")
             .attr("transform", "rotate(-90)")
             .attr("x", -margin.top - height / 2)

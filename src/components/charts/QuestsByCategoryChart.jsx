@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { getProfileLabel } from "../../utils/dataTransforms";
 
 const QuestsByCategoryChart = ({ data }) => {
     const ref = useRef();
@@ -59,7 +60,8 @@ const QuestsByCategoryChart = ({ data }) => {
         chart
             .append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x).tickFormat((d) => getProfileLabel(d)));
+
         chart.append("g").call(d3.axisLeft(y));
 
         chart
@@ -79,10 +81,31 @@ const QuestsByCategoryChart = ({ data }) => {
             .append("text")
             .attr("x", margin.left)
             .attr("y", 20)
-            .attr("font-size", "16px")
+            .attr("font-size", "12px")
             .attr("font-weight", "bold")
             .attr("fill", "white")
-            .text("Completed Quests per Category");
+            .attr("opacity", "70%")
+            .text("Quest Completion (Category)");
+
+        const legend = svg
+            .append("g")
+            .attr("transform", `translate(${width + margin.left - 10}, ${margin.top})`);
+
+        CATEGORIES.forEach((category, i) => {
+            legend.append("rect")
+                .attr("x", 0)
+                .attr("y", i * 20)
+                .attr("width", 12)
+                .attr("height", 12)
+                .attr("fill", COLORS(category));
+
+            legend.append("text")
+                .attr("x", 16)
+                .attr("y", i * 20 + 10)
+                .attr("font-size", "12px")
+                .attr("fill", "white")
+                .text(category[0]);
+        });
     }, [data]);
 
     return <div ref={ref} className="w-full h-auto" />;

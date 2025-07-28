@@ -51,7 +51,7 @@ const LockEfficiencyBoxplot = ({ data }) => {
 
         const x = d3
             .scaleBand()
-            .domain(boxData.map((d) => getProfileLabel(d.profile)))
+            .domain(boxData.map((d) => d.profile))
             .range([0, width])
             .padding(0.4);
 
@@ -60,7 +60,8 @@ const LockEfficiencyBoxplot = ({ data }) => {
         chart
             .append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x).tickFormat((d) => getProfileLabel(d)));
+
         chart.append("g").call(d3.axisLeft(y).ticks(5));
 
         // Boxplots
@@ -69,7 +70,7 @@ const LockEfficiencyBoxplot = ({ data }) => {
             .data(boxData)
             .join("g")
             .attr("class", "box")
-            .attr("transform", (d) => `translate(${x(getProfileLabel(d.profile))},0)`)
+            .attr("transform", (d) => `translate(${x(d.profile)},0)`)
 
             .each(function (d) {
                 const g = d3.select(this);
